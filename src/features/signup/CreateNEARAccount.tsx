@@ -11,7 +11,7 @@ import {
 
 interface Values {
   fullName: string;
-  accountId: string;
+  accountID: string;
 }
 
 const NEARAccountSchema = Yup.object().shape({
@@ -24,7 +24,7 @@ const  CreateNEARAccount : React.FC<{}> = () => {
   const dispatch = useAppDispatch();
   const initialValues: Values = { 
     fullName: '',
-    accountId: '',
+    accountID: '',
   };
   return (
     <div className="container max-w-md">
@@ -58,8 +58,9 @@ const  CreateNEARAccount : React.FC<{}> = () => {
             {({ values, errors, touched }) => (
               <Form>
                 <div className='p-2 text-center'>
-                  <div className='mb-4'>
-                    <Field 
+                  <div className='mb-4 text-left text-gray-300'>
+                    <label htmlFor='fullName' className='ml-1'>Full name</label>
+                    <Field
                       name="fullName" 
                       type="text" 
                       placeholder="Ex. John Doe" 
@@ -69,15 +70,16 @@ const  CreateNEARAccount : React.FC<{}> = () => {
                       <div className='text-red-500 text-left ml-1'>{errors.fullName}</div>
                     ) : null}
                   </div>
-                  <div>
+                  <div className='mb-4 text-left text-gray-300'>
+                  <label htmlFor='Account ID' className='ml-1'>Account ID</label>
                     <Field 
-                      name="Account ID" 
+                      name="accountID" 
                       type="text" 
                       placeholder="yourname" 
                       className='w-full py-1.5 px-3 border border-gray-500 bg-gray-800 rounded-md mr-4' 
                     />
-                    {errors.accountId && touched.accountId ? (
-                      <div className='text-red-500 text-left ml-1'>{errors.accountId}</div>
+                    {errors.accountID && touched.accountID ? (
+                      <div className='text-red-500 text-left ml-1'>{errors.accountID}</div>
                     ) : null}
                   </div>
                 </div>
