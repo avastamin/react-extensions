@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -14,6 +16,7 @@ module.exports = {
       }
     },
     colors: {
+      transparent: 'transparent',
       'white': '#FFFFFF',
       'blue':{
         100: '#587BE0',
@@ -26,6 +29,10 @@ module.exports = {
         700: '#f5f5f5',
         800: '#FCFCFC',
       },
+      'accent': {
+        2: '#885FFF'
+      },
+      red: colors.red
       /* 'purple': '#7e5bef',
       'pink': '#ff49db',
       'orange': '#ff7849',
