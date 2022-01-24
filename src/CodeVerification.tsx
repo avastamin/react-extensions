@@ -1,7 +1,5 @@
 import React from 'react';
 import HomeLogo from './img/HomeLogo.svg';
-import { ArrowSmRightIcon } from '@heroicons/react/solid'
-
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
 
@@ -26,7 +24,7 @@ const SignupSchema = Yup.object().shape({
   }),
 });
 
-const  App : React.FC<{}> = () => {
+const  CodeVerification : React.FC<{}> = () => {
   const initialValues: Values = { 
     email: '',
     phone: '',
@@ -35,7 +33,7 @@ const  App : React.FC<{}> = () => {
   return (
     <div className="container max-w-md">
       <header className='bg-gray-700 p-4 border-b-2 border-gray-50'>
-        <img className='w-105 mr-auto ml-auto' src={HomeLogo} alt="Logo" />
+        Verification
       </header>
       <div className='p-6'>
         <div className='text-center'>
@@ -90,13 +88,12 @@ const  App : React.FC<{}> = () => {
             }
             <button
               disabled={(values.email === '' && values.picked === 'email') || (values.picked === 'phone' && values.phone === '')}
-              className={`flex items-center h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
+              className={`h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
                 ${!!errors && ((values.email !== '' && values.picked === 'email') || (values.picked === 'phone' && values.phone !== '')) 
                   ? 'bg-accent-2' : 'bg-gray-500'}`
               }
             >
               Continue
-              <ArrowSmRightIcon className='w-5'/>
             </button>
           </Form>
           )}
@@ -116,4 +113,4 @@ const  App : React.FC<{}> = () => {
   );
 }
 
-export default App;
+export default CodeVerification;
