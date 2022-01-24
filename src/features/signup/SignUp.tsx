@@ -3,10 +3,9 @@ import HomeLogo from '../../img/HomeLogo.svg';
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import {
   addSignup,
-  signupData,
 } from './signupSlice';
 
 interface Values {
@@ -30,7 +29,6 @@ const SignupSchema = Yup.object().shape({
 });
 
 const  SignUp : React.FC<{}> = () => {
-  const usedData = useAppSelector(signupData);
   const dispatch = useAppDispatch();
   const initialValues: Values = { 
     email: '',
@@ -52,10 +50,6 @@ const  SignUp : React.FC<{}> = () => {
             { setSubmitting }: FormikHelpers<Values>
           ) => {
             dispatch(addSignup(values))
-  /*           setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500); */
           }}
         >
           {({ values, errors, touched }) => (
@@ -110,7 +104,7 @@ const  SignUp : React.FC<{}> = () => {
         </div>
         <div className='text-center mt-4'>
           <p className='text-gray-200 text-sm'>by clicking continue you must agree to near labs 
-            <a href='#' className='text-blue-100'> Terms & Conditions ans Privacy Policy</a></p>
+            <button className='text-blue-100'> Terms & Conditions ans Privacy Policy</button></p>
         </div>
         <div className='w-full h-px my-8 bg-gray-500'></div>
         <div className='text-center mt-4'>

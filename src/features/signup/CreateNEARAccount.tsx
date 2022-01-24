@@ -3,11 +3,6 @@ import { XCircleIcon } from '@heroicons/react/outline';
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import {
-  signupData,
-} from './signupSlice';
-
 
 interface Values {
   fullName: string;
@@ -20,8 +15,6 @@ const NEARAccountSchema = Yup.object().shape({
 });
 
 const  CreateNEARAccount : React.FC<{}> = () => {
-  const usedData = useAppSelector(signupData);
-  const dispatch = useAppDispatch();
   const initialValues: Values = { 
     fullName: '',
     accountID: '',
@@ -98,7 +91,7 @@ const  CreateNEARAccount : React.FC<{}> = () => {
         </div>
         <div className='text-center mt-4'>
           <p className='text-gray-200 text-sm'>by clicking continue you must agree to near labs 
-            <a href='#' className='text-blue-100'> Terms & Conditions ans Privacy Policy</a></p>
+            <button className='text-blue-100'> Terms & Conditions ans Privacy Policy</button></p>
         </div>
         <div className='w-full h-px my-8 bg-gray-500'></div>
         <div className='text-center mt-4'>
