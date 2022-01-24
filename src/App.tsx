@@ -12,7 +12,7 @@ const  App : React.FC<{}> = () => {
   const usedData = useAppSelector(signupData);
   console.log('usedData', usedData)
   return (
-    <div className="container max-w-md">
+    <div className="app container max-w-md bg-white">
       {usedData?.signupType === '' && !usedData?.isVerified && <SignUp />}
       {usedData?.signupType !== '' && !usedData?.isVerified && <CodeVerification />}
       {usedData?.isVerified && <CreateNEARAccount />}

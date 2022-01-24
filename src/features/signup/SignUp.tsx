@@ -38,7 +38,7 @@ const  SignUp : React.FC<{}> = () => {
     signupType: 'email' 
   };
   return (
-    <div className="container">
+    <div className="container h-38">
       <header className='bg-gray-700 p-4 border-b-2 border-gray-50'>
         <img className='w-105 mr-auto ml-auto' src={HomeLogo} alt="Logo" />
       </header>
