@@ -1,5 +1,6 @@
 import React from 'react';
-import HomeLogo from './img/HomeLogo.svg';
+import { XCircleIcon } from '@heroicons/react/outline';
+import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
 
@@ -32,81 +33,84 @@ const  CodeVerification : React.FC<{}> = () => {
   };
   return (
     <div className="container max-w-md">
-      <header className='bg-gray-700 p-4 border-b-2 border-gray-50'>
-        Verification
+      <header className='bg-gray-700 p-4 border-b-2 border-gray-50 flex flex-row text-black text-center relative'>
+        <div className='grow'>Verification</div>
+        <XCircleIcon className='w-7 text-gray-300 flex-none'/>
       </header>
-      <div className='p-6'>
+      <div className='p-6 text-center'>
+        <p className='text-gray-200'>We've sent a 6-digit verification code to the email address </p>
+        <p className='text-blue-100'>johndoe@gmail.com</p>
+      </div>
+      <div className='p-3'>
         <div className='text-center'>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={SignupSchema}
-          onSubmit={(
-            values: Values,
-            { setSubmitting }: FormikHelpers<Values>
-          ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
-          }}
-        >
-          {({ values, errors, touched }) => (
-          <Form>
-            <div role="group" aria-labelledby="my-radio-group" className='pb-6'>
-              <label className={`w-66 py-1.5 px-3  rounded-xl mr-4 ${values.picked === 'email' ? 'border border-gray-500 bg-gray-800' : 'border border-white'}`} >
-                <Field type="radio" name="picked" value="email" className='hidden'/>
-                Email
-              </label>
-              <label className={`w-66 py-1.5 px-3  rounded-xl mr-4 ${values.picked === 'phone' ? 'border border-gray-500 bg-gray-800' : 'border border-white'}`} >
-                <Field type="radio" name="picked" value="phone" className='hidden'/>
-                Phone
-              </label>
-            </div>
-            {values.picked === 'email' 
-              ? <div>
-                  <Field 
-                    name="email" 
-                    type="email" 
-                    placeholder="johndoe@domain.com" 
-                    className='w-full py-1.5 px-3 border border-gray-500 bg-gray-800 rounded-md mr-4' 
-                  />
-                  {errors.email && touched.email ? (
-                    <div className='text-red-500 text-left'>{errors.email}</div>
-                  ) : null}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={SignupSchema}
+            onSubmit={(
+              values: Values,
+              { setSubmitting }: FormikHelpers<Values>
+            ) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+              }, 500);
+            }}
+          >
+            {({ values, errors, touched }) => (
+              <Form>
+                <div className='p-2 text-center'>
+                  <p className='text-gray-10 pb-2'>Enter verification code</p>
+                  <div className='grid grid-cols-6 gap-1'>
+                    <Field 
+                      name="ver1" 
+                      type="number" 
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                    />
+                    <Field 
+                      name="ver2" 
+                      type="number" 
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                    />
+                    <Field 
+                      name="ver3" 
+                      type="number" 
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                    />
+                    <Field 
+                      name="ver4" 
+                      type="number" 
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                    />
+                    <Field 
+                      name="ver5" 
+                      type="number" 
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                    />
+                    <Field 
+                      name="ver6" 
+                      type="number" 
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                    />
+                  </div>
                 </div>
-              : <div>
-                <Field 
-                  name="phone" 
-                  type="number" 
-                  placeholder="Ex (337) 378 8383"
-                  className='w-full py-1.5 px-3 border border-gray-500 bg-gray-800 rounded-md mr-4' 
-                />
-                {errors.phone && touched.phone ? (
-                  <div className='text-red-500 text-left'>{errors.phone}</div>
-                ) : null}
-              </div>
-            }
-            <button
-              disabled={(values.email === '' && values.picked === 'email') || (values.picked === 'phone' && values.phone === '')}
-              className={`h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
-                ${!!errors && ((values.email !== '' && values.picked === 'email') || (values.picked === 'phone' && values.phone !== '')) 
-                  ? 'bg-accent-2' : 'bg-gray-500'}`
-              }
-            >
-              Continue
-            </button>
-          </Form>
-          )}
-        </Formik>
-        </div>
-        <div className='text-center mt-4'>
-          <p className='text-gray-200 text-sm'>by clicking continue you must agree to near labs 
-            <a href='#' className='text-blue-100'> Terms & Conditions ans Privacy Policy</a></p>
+                <button
+                  className={`flex items-center h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
+                    ${!!errors  
+                      ? 'bg-accent-2' : 'bg-gray-500'}`
+                  }
+                >
+                  Continue
+                  <ChevronRightIcon className='w-5'/>
+                </button>
+              </Form>
+            )}
+          </Formik>
         </div>
         <div className='w-full h-px my-8 bg-gray-500'></div>
         <div className='text-center mt-4'>
-          <p>Already have NEAR account?</p>
-          <button className='h-22 py-2 pr-4 pl-7 mt-2 mr-auto ml-auto text-white bg-gray-200 border border-gray-500 rounded-lg'>Login in with NEAR</button>
+          <p className='text-sm text-gray-200 mb-4'>Didn't receive your code?</p>
+          <p className='text-blue-100 text-sm mb-4'>Send to a different email address</p>
+          <p className='text-blue-100 text-sm'>Resend your code</p>
         </div>
       </div>
     </div>
