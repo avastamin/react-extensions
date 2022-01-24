@@ -3,6 +3,10 @@ import { XCircleIcon } from '@heroicons/react/outline';
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
+import { useAppSelector } from '../../app/hooks';
+import {
+  signupData,
+} from './signupSlice';
 
 
 interface Values {
@@ -26,6 +30,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const  CodeVerification : React.FC<{}> = () => {
+  const usedData = useAppSelector(signupData);
   const initialValues: Values = { 
     email: '',
     phone: '',
@@ -38,8 +43,18 @@ const  CodeVerification : React.FC<{}> = () => {
         <XCircleIcon className='w-7 text-gray-300 flex-none'/>
       </header>
       <div className='p-6 text-center'>
-        <p className='text-gray-200'>We've sent a 6-digit verification code to the email address </p>
-        <p className='text-blue-100'>johndoe@gmail.com</p>
+        <p className='text-gray-200'>We've sent a 6-digit verification code to 
+          {usedData?.signupType === 'email' 
+            ? ' the email address.' 
+            : ' your phone'
+          }
+        </p>
+        <p className='text-blue-100'>
+          {usedData?.signupType === 'email' 
+            ? usedData?.email 
+            : usedData?.phone
+          }
+        </p>
       </div>
       <div className='p-3'>
         <div className='text-center'>
@@ -64,32 +79,32 @@ const  CodeVerification : React.FC<{}> = () => {
                     <Field 
                       name="ver1" 
                       type="number" 
-                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver2" 
                       type="number" 
-                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver3" 
                       type="number" 
-                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver4" 
                       type="number" 
-                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver5" 
                       type="number" 
-                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver6" 
                       type="number" 
-                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md'
+                      className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                   </div>
                 </div>

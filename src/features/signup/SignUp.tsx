@@ -1,23 +1,27 @@
 import React from 'react';
-import HomeLogo from './img/HomeLogo.svg';
+import HomeLogo from '../../img/HomeLogo.svg';
 import { ChevronRightIcon } from '@heroicons/react/solid'
-
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import {
+  addSignup,
+  signupData,
+} from './signupSlice';
 
 interface Values {
   email: string;
   phone: string;
-  picked: string;
+  signupType: string;
 }
 
 const SignupSchema = Yup.object().shape({
-  email: Yup.string().when('picked',{
-    is: (picked: string) => picked === 'email',
+  email: Yup.string().when('signupType',{
+    is: (signupType: string) => signupType === 'email',
     then: Yup.string().email('Invalid email').required('Required')
   }),
-  phone: Yup.string().when('picked',{
-    is: (picked: string) => picked === 'phone',
+  phone: Yup.string().when('signupType',{
+    is: (signupType: string) => signupType === 'phone',
     then: Yup.string()
     .min(7, 'Too Short!')
     .max(10, 'Too Long!')
@@ -25,11 +29,13 @@ const SignupSchema = Yup.object().shape({
   }),
 });
 
-const  SignUpForm : React.FC<{}> = () => {
+const  SignUp : React.FC<{}> = () => {
+  const usedData = useAppSelector(signupData);
+  const dispatch = useAppDispatch();
   const initialValues: Values = { 
     email: '',
     phone: '',
-    picked: 'email' 
+    signupType: 'email' 
   };
   return (
     <div className="container">
@@ -45,6 +51,7 @@ const  SignUpForm : React.FC<{}> = () => {
             values: Values,
             { setSubmitting }: FormikHelpers<Values>
           ) => {
+            dispatch(addSignup(values))
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
@@ -54,16 +61,16 @@ const  SignUpForm : React.FC<{}> = () => {
           {({ values, errors, touched }) => (
           <Form>
             <div role="group" aria-labelledby="my-radio-group" className='pb-6'>
-              <label className={`w-66 py-1.5 px-3  rounded-xl mr-4 ${values.picked === 'email' ? 'border border-gray-500 bg-gray-800' : 'border border-white'}`} >
-                <Field type="radio" name="picked" value="email" className='hidden'/>
+              <label className={`w-66 py-1.5 px-3  rounded-xl mr-4 ${values.signupType === 'email' ? 'border border-gray-500 bg-gray-800' : 'border border-white'}`} >
+                <Field type="radio" name="signupType" value="email" className='hidden'/>
                 Email
               </label>
-              <label className={`w-66 py-1.5 px-3  rounded-xl mr-4 ${values.picked === 'phone' ? 'border border-gray-500 bg-gray-800' : 'border border-white'}`} >
-                <Field type="radio" name="picked" value="phone" className='hidden'/>
+              <label className={`w-66 py-1.5 px-3  rounded-xl mr-4 ${values.signupType === 'phone' ? 'border border-gray-500 bg-gray-800' : 'border border-white'}`} >
+                <Field type="radio" name="signupType" value="phone" className='hidden'/>
                 Phone
               </label>
             </div>
-            {values.picked === 'email' 
+            {values.signupType === 'email' 
               ? <div>
                   <Field 
                     name="email" 
@@ -88,9 +95,9 @@ const  SignUpForm : React.FC<{}> = () => {
               </div>
             }
             <button
-              disabled={(values.email === '' && values.picked === 'email') || (values.picked === 'phone' && values.phone === '')}
+              disabled={(values.email === '' && values.signupType === 'email') || (values.signupType === 'phone' && values.phone === '')}
               className={`flex items-center h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
-                ${!!errors && ((values.email !== '' && values.picked === 'email') || (values.picked === 'phone' && values.phone !== '')) 
+                ${!!errors && ((values.email !== '' && values.signupType === 'email') || (values.signupType === 'phone' && values.phone !== '')) 
                   ? 'bg-accent-2' : 'bg-gray-500'}`
               }
             >
@@ -115,4 +122,4 @@ const  SignUpForm : React.FC<{}> = () => {
   );
 }
 
-export default SignUpForm;
+export default SignUp;
