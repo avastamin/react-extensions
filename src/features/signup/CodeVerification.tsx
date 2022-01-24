@@ -3,38 +3,59 @@ import { XCircleIcon } from '@heroicons/react/outline';
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import * as Yup from "yup";
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
+  addVerification,
   signupData,
 } from './signupSlice';
 
 
 interface Values {
-  email: string;
-  phone: string;
-  picked: string;
+  ver1: string;
+  ver2: string;
+  ver3: string;
+  ver4: string;
+  ver5: string;
+  ver6: string;
 }
 
-const SignupSchema = Yup.object().shape({
-  email: Yup.string().when('picked',{
-    is: (picked: string) => picked === 'email',
-    then: Yup.string().email('Invalid email').required('Required')
-  }),
-  phone: Yup.string().when('picked',{
-    is: (picked: string) => picked === 'phone',
-    then: Yup.string()
-    .min(7, 'Too Short!')
-    .max(10, 'Too Long!')
-    .required('Required'),
-  }),
+const VerificationSchema = Yup.object().shape({
+  ver1: Yup.string()
+  .min(1, 'Too Short!')
+  .max(1, 'Too Long!')
+  .required('Required'),
+  ver2: Yup.string()
+  .min(1, 'Too Short!')
+  .max(1, 'Too Long!')
+  .required('Required'),
+  ver3: Yup.string()
+  .min(1, 'Too Short!')
+  .max(1, 'Too Long!')
+  .required('Required'),
+  ver4: Yup.string()
+  .min(1, 'Too Short!')
+  .max(1, 'Too Long!')
+  .required('Required'),
+  ver5: Yup.string()
+  .min(1, 'Too Short!')
+  .max(1, 'Too Long!')
+  .required('Required'),
+  ver6: Yup.string()
+  .min(1, 'Too Short!')
+  .max(1, 'Too Long!')
+  .required('Required'),
 });
 
 const  CodeVerification : React.FC<{}> = () => {
   const usedData = useAppSelector(signupData);
+  const dispatch = useAppDispatch();
   const initialValues: Values = { 
-    email: '',
-    phone: '',
-    picked: 'email' 
+    ver1: '',
+    ver2: '',
+    ver3: '',
+    ver4: '',
+    ver5: '',
+    ver6: '',
   };
   return (
     <div className="container max-w-md">
@@ -60,15 +81,12 @@ const  CodeVerification : React.FC<{}> = () => {
         <div className='text-center'>
           <Formik
             initialValues={initialValues}
-            validationSchema={SignupSchema}
+            validationSchema={VerificationSchema}
             onSubmit={(
               values: Values,
               { setSubmitting }: FormikHelpers<Values>
             ) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 500);
+              dispatch(addVerification(true))
             }}
           >
             {({ values, errors, touched }) => (
@@ -78,37 +96,41 @@ const  CodeVerification : React.FC<{}> = () => {
                   <div className='grid grid-cols-6 gap-1'>
                     <Field 
                       name="ver1" 
-                      type="number" 
+                      type="text" 
                       className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver2" 
-                      type="number" 
+                      type="text" 
                       className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver3" 
-                      type="number" 
+                      type="text" 
                       className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver4" 
-                      type="number" 
+                      type="text" 
                       className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver5" 
-                      type="number" 
+                      type="text" 
                       className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                     <Field 
                       name="ver6" 
-                      type="number" 
+                      type="text" 
                       className='w-12 h-12 border border-gray-500 bg-gray-50 rounded-md text-center'
                     />
                   </div>
+                  {errors.ver1 || errors.ver2 || errors.ver3 || errors.ver4 || errors.ver5  || errors.ver6 ? (
+                        <div className='text-red-500 text-left'>Something went wrong!</div>
+                      ) : null}
                 </div>
                 <button
+                  type='submit'
                   className={`flex items-center h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
                     ${!!errors  
                       ? 'bg-accent-2' : 'bg-gray-500'}`

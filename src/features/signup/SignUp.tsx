@@ -52,10 +52,10 @@ const  SignUp : React.FC<{}> = () => {
             { setSubmitting }: FormikHelpers<Values>
           ) => {
             dispatch(addSignup(values))
-            setTimeout(() => {
+  /*           setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
-            }, 500);
+            }, 500); */
           }}
         >
           {({ values, errors, touched }) => (
