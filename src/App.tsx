@@ -86,7 +86,15 @@ const  App : React.FC<{}> = () => {
                 ) : null}
               </div>
             }
-            <button className='h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white bg-gray-500 border border-gray-500 rounded-lg'>Continue</button>
+            <button
+              disabled={(values.email === '' && values.picked === 'email') || (values.picked === 'phone' && values.phone === '')}
+              className={`h-22 py-2 pr-4 pl-7 mt-5 mr-auto ml-auto text-white border-gray-500 rounded-lg 
+                ${!!errors && ((values.email !== '' && values.picked === 'email') || (values.picked === 'phone' && values.phone !== '')) 
+                  ? 'bg-accent-2' : 'bg-gray-500'}`
+              }
+            >
+              Continue
+            </button>
           </Form>
           )}
         </Formik>
